@@ -1,9 +1,7 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <transition name="fade" mode="out-in">
+    <router-view />
+  </transition>
 </template>
 
 <style lang="scss">
@@ -26,5 +24,15 @@ nav {
       color: #42b983;
     }
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
