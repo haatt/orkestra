@@ -1,5 +1,6 @@
 <template>
-  <transition name="fade" mode="out-in">
+  <p class="text-red">aaaaaaaaaaaaaaaa</p>
+  <transition :duration="550" name="fade" mode="out-in">
     <router-view />
   </transition>
 </template>
