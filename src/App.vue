@@ -1,39 +1,22 @@
 <template>
-  <p class="text-red">aaaaaaaaaaaaaaaa</p>
-  <transition :duration="550" name="fade" mode="out-in">
+  <Transition name="fade" mode="out-in">
     <router-view />
-  </transition>
+  </Transition>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.fade-enter-active .inner,
+.fade-leave-active .inner {
+  transition: all 0.3s ease-in-out;
 }
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
+.fade-enter-from .inner,
+.fade-leave-to .inner {
+  transform: translateX(30px);
   opacity: 0;
+}
+
+.fade-enter-active .inner {
+  transition-delay: 0.25s;
 }
 </style>
