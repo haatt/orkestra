@@ -1,12 +1,10 @@
 <template>
   <div class="card-container">
-    <!-- Slot para el header -->
     <div v-show="props.showHeader" class="w-full">
       <slot name="header"></slot>
     </div>
 
-    <!-- Slot para el body -->
-    <div class="w-full px-[12px]">
+    <div class="h-auto min-w-full px-[12px]">
       <slot name="body"></slot>
     </div>
   </div>
@@ -25,6 +23,6 @@ const props = defineProps({
 
 <style lang="scss">
 .card-container {
-  @apply flex flex-col items-center mx-auto h-screen bg-[#E3E9EE] max-w-6xl min-w-[414px] shadow-xl;
+  @apply flex flex-col items-center mx-auto min-h-screen bg-[#E3E9EE] max-w-6xl min-w-[414px] shadow-xl pb-2;
 }
 </style>
