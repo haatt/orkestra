@@ -27,16 +27,18 @@
         </template>
 
         <template v-else>
-          <div class="flex justify-start items-center w-full m-3">
-            <LeftArrowIcon class="w-[27px] h-[17]" />
+          <div class="w-full">
             <button
+              @click="onShowScanner"
               type="button"
-              class="text-[#2780BA] ml-1 font-bold underline"
+              class="text-[#2780BA] font-bold flex justify-start items-center m-3"
             >
-              Regresar
+              <LeftArrowIcon class="w-[27px] h-[17]" />
+              <p class="ml-1 text-xl">Regresar</p>
             </button>
+
+            <span class="font-bold text-xl m-3">Escanea el código</span>
           </div>
-          <span class="font-bold text-xl m-3">Escanea el código</span>
         </template>
       </template>
     </CardContainer>
