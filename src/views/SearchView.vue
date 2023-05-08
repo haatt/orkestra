@@ -1,24 +1,43 @@
 <template>
   <div class="search-view">
-    <CardContainer>
+    <CardContainer
+      :show-header="showHeader"
+      :background-color="backgroundColor"
+    >
       <template #header>
         <ProductsHeader />
       </template>
 
       <template #body>
-        <CustomInput
-          placeholder="Buscar Producto"
-          class="mt-[23px]"
-          @onWriting="searchText"
-        />
+        <template v-if="!showScanner">
+          <CustomInput
+            placeholder="Buscar Producto"
+            class="mt-[23px]"
+            @onWriting="onWriting"
+            @onShowScanner="onShowScanner"
+          />
 
-        <div class="w-full text-right my-3">
-          <button type="button" class="text-[#2780BA] underline">
-            Filtros
-          </button>
-        </div>
+          <div class="w-full text-right my-3">
+            <button type="button" class="text-[#2780BA] underline">
+              Filtros
+            </button>
+          </div>
 
-        <ListProducts :products-list="products" />
+          <ListProducts :products-list="products" />
+        </template>
+
+        <template v-else>
+          <div class="flex justify-start items-center w-full m-3">
+            <LeftArrowIcon class="w-[27px] h-[17]" />
+            <button
+              type="button"
+              class="text-[#2780BA] ml-1 font-bold underline"
+            >
+              Regresar
+            </button>
+          </div>
+          <span class="font-bold text-xl m-3">Escanea el código</span>
+        </template>
       </template>
     </CardContainer>
   </div>
@@ -33,14 +52,22 @@ import CardContainer from "@/components/core/CardContainer.vue";
 import ProductsHeader from "@/components/products/ProductsHeader.vue";
 import CustomInput from "@/components/core/CustomInput.vue";
 import ListProducts from "@/components/products/ListProducts.vue";
+import LeftArrowIcon from "@/components/shared/components/icons/LeftArrowIcon.vue";
 
 import type { BrandFormData } from "@/components/products/services/ProductService.types";
 import type { AxiosResponse } from "axios";
 
-const products = ref([] as BrandFormData[]);
 const store = useStore();
-const bearerToken = computed(() => store.getters.getToken);
+
+const products = ref([] as BrandFormData[]);
 const textToSearch = ref("");
+const showScanner = ref(false);
+
+const bearerToken = computed(() => store.getters.getToken);
+const showHeader = computed(() => textToSearch.value === "");
+const backgroundColor = computed(() =>
+  showScanner.value ? "#FFFFFF" : "#E3E9EE"
+);
 
 onMounted(async function (): Promise<void> {
   await fetchProducts();
@@ -48,10 +75,12 @@ onMounted(async function (): Promise<void> {
 
 watch(textToSearch, () => fetchProducts());
 
-const searchText = async function (text: string): Promise<void> {
+const onWriting = async function (text: string): Promise<void> {
   textToSearch.value = text;
 };
-
+const onShowScanner = function (): void {
+  showScanner.value = !showScanner.value;
+};
 const fetchProducts = async function (): Promise<void> {
   await axios
     .get("https://dev.orkestra.mx/api/v1/smart-cart/products", {

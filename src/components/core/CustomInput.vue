@@ -12,7 +12,11 @@
     />
 
     <div class="flex justify-center items-center">
-      <BarcodeIcon v-if="showBarcodeIcon" class="w-[30px] mr-[13px]" />
+      <BarcodeIcon
+        v-if="showBarcodeIcon"
+        @click="emits('onShowScanner')"
+        class="w-[30px] mr-[13px]"
+      />
       <ClearFieldIcon
         v-else
         class="w-[26px] mr-[13px]"
@@ -47,6 +51,7 @@ const showBarcodeIcon = computed(() => textToSearch.value === "");
 
 const emits = defineEmits<{
   (e: "onWriting", text: string): void;
+  (e: "onShowScanner"): void;
 }>();
 
 const debounceWriting = function (): void {
