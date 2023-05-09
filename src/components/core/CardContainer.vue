@@ -1,9 +1,8 @@
 <template>
-  <div class="card-container" :class="bgCard">
+  <div class="card-container" :class="[bgCard]">
     <div v-show="props.showHeader" class="w-full">
       <slot name="header"></slot>
     </div>
-
     <div class="h-auto min-w-full px-[12px]">
       <slot name="body"></slot>
     </div>
@@ -20,7 +19,7 @@ const props = defineProps({
   },
   backgroundColor: {
     type: String,
-    default: "#FFFFFF",
+    default: "#E3E9EE",
   },
 });
 
