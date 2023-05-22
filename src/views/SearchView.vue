@@ -18,7 +18,11 @@
           />
 
           <div class="w-full text-right my-3">
-            <button type="button" class="text-[#2780BA] underline">
+            <button
+              @click="openFilterModal"
+              type="button"
+              class="text-[#2780BA] underline"
+            >
               Filtros
             </button>
           </div>
@@ -49,6 +53,8 @@
         </template>
       </template>
     </CardContainer>
+
+    <ModalFilter ref="filterModal" />
   </div>
 </template>
 
@@ -59,10 +65,11 @@ import axios from "axios";
 
 import CardContainer from "@/components/core/CardContainer.vue";
 import CardSkeleton from "@/components/core/CardSkeleton.vue";
-import ProductsHeader from "@/components/products/ProductsHeader.vue";
+import ProductsHeader from "@/components/products/components/ProductsHeader.vue";
 import CustomInput from "@/components/core/CustomInput.vue";
-import ListProducts from "@/components/products/ListProducts.vue";
+import ListProducts from "@/components/products/components/ListProducts.vue";
 import LeftArrowIcon from "@/components/shared/components/icons/LeftArrowIcon.vue";
+import ModalFilter from "@/components/products/components/ModalFilter.vue";
 
 import type {
   ResponseProductsData,
@@ -76,6 +83,7 @@ const products = ref([] as ProductData[]);
 const textToSearch = ref("");
 const showScanner = ref(false);
 const loader = ref(false);
+const filterModal = ref<InstanceType<typeof ModalFilter> | null>(null);
 
 const bearerToken = computed(() => store.getters.getToken);
 const showHeader = computed(() => textToSearch.value === "");
@@ -116,5 +124,8 @@ const fetchProducts = async function (): Promise<void> {
       console.log(products.value);
     })
     .finally(() => (loader.value = false));
+};
+const openFilterModal = function (): void {
+  filterModal.value?.openFilterModal();
 };
 </script>

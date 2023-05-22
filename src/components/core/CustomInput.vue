@@ -14,7 +14,7 @@
     <div class="flex justify-center items-center">
       <BarcodeIcon
         v-if="showBarcodeIcon"
-        @click="emits('onShowScanner')"
+        @click="emit('onShowScanner')"
         class="w-[30px] mr-[13px]"
       />
       <ClearFieldIcon
@@ -36,7 +36,7 @@ import SearchIcon from "@/components/shared/components/icons/SearchIcon.vue";
 
 const textToSearch = ref("");
 const debouncedSearch = debounce(() => {
-  emits("onWriting", textToSearch.value);
+  emit("onWriting", textToSearch.value);
 }, 750);
 const props = defineProps({
   placeholder: {
@@ -49,7 +49,7 @@ watch(textToSearch, () => debounceWriting());
 
 const showBarcodeIcon = computed(() => textToSearch.value === "");
 
-const emits = defineEmits<{
+const emit = defineEmits<{
   (e: "onWriting", text: string): void;
   (e: "onShowScanner"): void;
 }>();
