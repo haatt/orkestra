@@ -63,10 +63,10 @@ import { computed, ref, onMounted, watch } from "vue";
 import { useStore } from "vuex";
 import axios from "axios";
 
-import CardContainer from "@/components/core/CardContainer.vue";
-import CardSkeleton from "@/components/core/CardSkeleton.vue";
+import CardContainer from "@/components/core/components/CardContainer.vue";
+import CardSkeleton from "@/components/core/components/CardSkeleton.vue";
 import ProductsHeader from "@/components/products/components/ProductsHeader.vue";
-import CustomInput from "@/components/core/CustomInput.vue";
+import CustomInput from "@/components/core/components/CustomInput.vue";
 import ListProducts from "@/components/products/components/ListProducts.vue";
 import LeftArrowIcon from "@/components/shared/components/icons/LeftArrowIcon.vue";
 import ModalFilter from "@/components/products/components/ModalFilter.vue";

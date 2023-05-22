@@ -44,8 +44,8 @@
 <script lang="ts" setup>
 import { ref, defineExpose } from "vue";
 
-import GenericModal from "@/components/core/GenericModal.vue";
-import GenericButton from "@/components/core/GenericButton.vue";
+import GenericModal from "@/components/core/components/GenericModal.vue";
+import GenericButton from "@/components/core/components/GenericButton.vue";
 
 const filterModal = ref<InstanceType<typeof GenericModal> | null>(null);
 
