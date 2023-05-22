@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, computed } from "vue";
+import { defineProps } from "vue";
 
 const props = defineProps({
   showHeader: {
