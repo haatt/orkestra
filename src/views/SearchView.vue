@@ -23,7 +23,14 @@
             </button>
           </div>
 
-          <ListProducts :products-list="products" />
+          <template v-if="loader">
+            <CardSkeleton
+              v-for="n in 6"
+              :key="n"
+              class="mb-0.5 w-full h-[135px]"
+            />
+          </template>
+          <ListProducts v-else :products-list="products" />
         </template>
 
         <template v-else>
@@ -51,19 +58,24 @@ import { useStore } from "vuex";
 import axios from "axios";
 
 import CardContainer from "@/components/core/CardContainer.vue";
+import CardSkeleton from "@/components/core/CardSkeleton.vue";
 import ProductsHeader from "@/components/products/ProductsHeader.vue";
 import CustomInput from "@/components/core/CustomInput.vue";
 import ListProducts from "@/components/products/ListProducts.vue";
 import LeftArrowIcon from "@/components/shared/components/icons/LeftArrowIcon.vue";
 
-import type { BrandFormData } from "@/components/products/services/ProductService.types";
+import type {
+  ResponseProductsData,
+  ProductData,
+} from "@/components/products/services/ProductService.types";
 import type { AxiosResponse } from "axios";
 
 const store = useStore();
 
-const products = ref([] as BrandFormData[]);
+const products = ref([] as ProductData[]);
 const textToSearch = ref("");
 const showScanner = ref(false);
+const loader = ref(false);
 
 const bearerToken = computed(() => store.getters.getToken);
 const showHeader = computed(() => textToSearch.value === "");
@@ -84,6 +96,7 @@ const onShowScanner = function (): void {
   showScanner.value = !showScanner.value;
 };
 const fetchProducts = async function (): Promise<void> {
+  loader.value = true;
   await axios
     .get("https://dev.orkestra.mx/api/v1/smart-cart/products", {
       headers: {
@@ -97,8 +110,11 @@ const fetchProducts = async function (): Promise<void> {
         with_products: 1,
       },
     })
-    .then((response: AxiosResponse) => {
-      products.value = response.data.products.data as BrandFormData[];
-    });
+    .then((response: AxiosResponse) => response.data)
+    .then((productsData: ResponseProductsData) => {
+      products.value = productsData.products.data as ProductData[];
+      console.log(products.value);
+    })
+    .finally(() => (loader.value = false));
 };
 </script>
