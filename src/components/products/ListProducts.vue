@@ -33,6 +33,8 @@ import { defineProps, PropType } from "vue";
 
 import type { ProductData } from "@/components/products/services/ProductService.types";
 
+import NoImage from "@/assets/images/no-photo.png";
+
 const props = defineProps({
   productsList: {
     type: Array as PropType<ProductData[]>,
@@ -41,7 +43,10 @@ const props = defineProps({
 });
 
 const imageSrc = function (product: ProductData): string {
-  return `${product.images[0]?.path}${product.images[0]?.file}`;
+  const image = product.images[0]
+    ? `${product.images[0]?.path}${product.images[0]?.file}`
+    : NoImage;
+  return image;
 };
 </script>
 
